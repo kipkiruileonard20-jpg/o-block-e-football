@@ -1,277 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="O Block E Football — Where Kings Compete. Real-time esports competition platform."/>
   <title>O BLOCK E FOOTBALL</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
-
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════
-       CANVAS + BACKGROUND
-  ═══════════════════════════════════════════ -->
-  <canvas id="bgCanvas"></canvas>
-  <div class="bg-gradient"></div>
-
-  <!-- ═══════════════════════════════════════════
-       LANDING PAGE
-  ═══════════════════════════════════════════ -->
-  <div id="landing">
-    <div class="landing-lights">
-      <div class="light light-left"></div>
-      <div class="light light-right"></div>
+  <!-- LANDING PAGE -->
+  <div id="landing-page" class="landing-page">
+    <div class="landing-bg">
+      <div class="grid-overlay"></div>
+      <div class="scanlines"></div>
+      <div class="particles" id="particles"></div>
     </div>
     <div class="landing-content">
-      <div class="landing-badge">⚡ SEASON 01 · LIVE NOW</div>
-      <h1 class="landing-title">
-        <span class="lt-1">O BLOCK</span>
-        <span class="lt-2">E FOOTBALL</span>
-      </h1>
-      <div class="landing-bar"></div>
-      <p class="landing-tagline">WHERE KINGS COMPETE</p>
-      <button id="enterBtn" class="btn-enter">
-        ENTER THE ARENA
-        <span class="btn-ring"></span>
+      <div class="logo-container">
+        <div class="logo-glow"></div>
+        <div class="logo-badge">⚽</div>
+        <h1 class="logo-title">
+          <span class="logo-o">O</span>
+          <span class="logo-block">BLOCK</span>
+        </h1>
+        <h2 class="logo-sub">E FOOTBALL</h2>
+        <div class="logo-tagline">COMPETE. DOMINATE. ASCEND.</div>
+      </div>
+      <div class="landing-stats">
+        <div class="stat-pill">🔴 LIVE</div>
+        <div class="stat-pill">⚡ REAL-TIME SCORES</div>
+        <div class="stat-pill">🏆 GLOBAL LEADERBOARD</div>
+      </div>
+      <button class="enter-btn" id="enterArenaBtn">
+        <span class="enter-btn-bg"></span>
+        <span class="enter-btn-text">ENTER ARENA</span>
+        <span class="enter-btn-arrow">→</span>
       </button>
     </div>
-    <div class="landing-footer">POWERED BY O BLOCK · EST. 2024</div>
   </div>
 
-  <!-- ═══════════════════════════════════════════
-       MAIN APP
-  ═══════════════════════════════════════════ -->
-  <div id="app" class="hidden">
+  <!-- MAIN APP -->
+  <div id="main-app" class="main-app hidden">
 
-    <!-- NAVBAR -->
-    <nav id="navbar">
-      <div class="nav-logo">
-        <span class="nav-logo-o">O</span> BLOCK
-        <span class="nav-logo-ef">EF</span>
+    <!-- NAV -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <span class="nav-icon">⚽</span>
+        <span class="nav-title">O BLOCK <span class="accent">E FOOTBALL</span></span>
       </div>
-      <div class="nav-center">
-        <a href="#section-register" class="nav-link">Register</a>
-        <a href="#section-leaderboard" class="nav-link">Leaderboard</a>
-        <a href="#section-admin" class="nav-link" id="navAdminLink" style="display:none">Admin</a>
-      </div>
-      <div class="nav-right">
-        <div id="navUser" class="nav-user hidden">
-          <span class="nav-user-icon">🛡️</span>
-          <span id="navUserEmail" class="nav-user-email"></span>
-          <button id="logoutBtn" class="btn-sm btn-ghost">LOGOUT</button>
+      <div class="nav-actions">
+        <div class="live-indicator"><span class="live-dot"></span>LIVE</div>
+        <div id="auth-area">
+          <button class="btn-ghost">ADMIN LOGIN</button>
         </div>
-        <button id="loginNavBtn" class="btn-sm btn-neon">ADMIN LOGIN</button>
       </div>
-      <button class="hamburger" id="hamburger">☰</button>
     </nav>
 
-    <!-- MOBILE MENU -->
-    <div id="mobileMenu" class="mobile-menu closed">
-      <a href="#section-register" class="mob-link" onclick="closeMobileMenu()">Register</a>
-      <a href="#section-leaderboard" class="mob-link" onclick="closeMobileMenu()">Leaderboard</a>
-      <a href="#section-admin" class="mob-link admin-mob-link hidden" id="mobAdminLink" onclick="closeMobileMenu()">Admin Panel</a>
-      <button id="mobLoginBtn" class="btn-sm btn-neon" style="margin-top:1rem">ADMIN LOGIN</button>
-      <button id="mobLogoutBtn" class="btn-sm btn-ghost hidden" style="margin-top:.5rem">LOGOUT</button>
+    <!-- TAB BAR -->
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="leaderboard">🏆 LEADERBOARD</button>
+      <button class="tab-btn" data-tab="fixtures">📅 FIXTURES</button>
+      <button class="tab-btn" data-tab="players">👤 PLAYERS</button>
+      <button class="tab-btn" data-tab="bracket">🎯 BRACKET</button>
     </div>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-bg-grid"></div>
-      <div class="hero-scanlines"></div>
-      <div class="hero-content">
-        <div class="hero-live-badge">
-          <span class="live-dot"></span>
-          SEASON 01 · LIVE
-        </div>
-        <h1 class="hero-title">
-          O BLOCK<br/>
-          <span class="hero-title-red">E FOOTBALL</span>
-        </h1>
-        <p class="hero-sub">Where Kings Compete</p>
-        <div class="hero-stats">
-          <div class="hstat">
-            <span id="hs-players" class="hstat-num">0</span>
-            <small>PLAYERS</small>
-          </div>
-          <div class="hstat-div"></div>
-          <div class="hstat">
-            <span id="hs-goals" class="hstat-num">0</span>
-            <small>GOALS</small>
-          </div>
-          <div class="hstat-div"></div>
-          <div class="hstat">
-            <span id="hs-matches" class="hstat-num">0</span>
-            <small>MATCHES</small>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="app-container">
 
-    <!-- REGISTER SECTION -->
-    <section id="section-register" class="section">
-      <div class="section-inner">
-        <div class="section-tag">// JOIN THE COMPETITION</div>
-        <h2 class="section-title">PLAYER <span>REGISTRATION</span></h2>
-        <div class="glass-card reg-card">
-          <form id="registerForm">
-            <div class="field-group">
-              <label class="field-label">FULL NAME <span class="req">*</span></label>
-              <input type="text" id="regName" class="field-input" placeholder="Enter your full name" required autocomplete="off"/>
+      <!-- LEFT COLUMN -->
+      <div class="left-col">
+
+        <!-- REGISTER -->
+        <div class="card" id="register-card">
+          <div class="card-header">
+            <span class="card-icon">👤</span>
+            <h3>JOIN THE ARENA</h3>
+          </div>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" id="playerNameInput" class="neon-input" placeholder="Full Name" maxlength="40" />
+              <div class="input-bar"></div>
             </div>
-            <button type="submit" class="btn-primary" id="regBtn">
-              <span>REGISTER NOW</span>
-              <div class="btn-shine"></div>
+            <div class="input-group">
+              <input type="url" id="playerPhotoInput" class="neon-input" placeholder="Photo URL (optional)" />
+              <div class="input-bar"></div>
+            </div>
+            <div class="input-group">
+              <input type="text" id="playerPositionInput" class="neon-input" placeholder="Position e.g. Striker" maxlength="30" />
+              <div class="input-bar"></div>
+            </div>
+            <button class="btn-primary" id="registerBtn">
+              <span>REGISTER PLAYER</span>
+              <span class="btn-glow"></span>
             </button>
-          </form>
-          <div id="regMsg" class="form-msg hidden"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LEADERBOARD SECTION -->
-    <section id="section-leaderboard" class="section section-dark">
-      <div class="section-inner">
-        <div class="section-tag">// COMPETITION STANDINGS</div>
-        <h2 class="section-title">LEADERBOARD <span>RANKINGS</span></h2>
-        <div class="table-container">
-          <div class="table-topbar">
-            <span class="table-topbar-label">LIVE RANKINGS</span>
-            <span class="live-indicator"><span class="live-dot"></span>REAL-TIME</span>
-          </div>
-          <div class="table-wrap">
-            <table id="leaderboardTable">
-              <thead>
-                <tr>
-                  <th>RANK</th>
-                  <th>PLAYER</th>
-                  <th>MP</th>
-                  <th>GOALS</th>
-                  <th>GD</th>
-                  <th>PTS</th>
-                </tr>
-              </thead>
-              <tbody id="leaderboardBody">
-                <tr class="empty-row">
-                  <td colspan="6">No players registered yet.</td>
-                </tr>
-              </tbody>
-            </table>
+            <div id="register-msg" class="msg-box hidden"></div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ─── ADMIN LOGIN MODAL ─── -->
-    <div id="loginModal" class="modal-overlay hidden">
-      <div class="modal-box">
-        <div class="modal-bar"></div>
-        <button class="modal-close" id="closeLoginModal">✕</button>
-        <div class="modal-icon">🛡️</div>
-        <h3 class="modal-title">ADMIN ACCESS</h3>
-        <p class="modal-sub">Authorised personnel only</p>
-        <form id="loginForm">
-          <div class="field-group">
-            <label class="field-label">EMAIL</label>
-            <input type="email" id="loginEmail" class="field-input" placeholder="admin@oblockefl.com" required/>
+        <!-- ADMIN LOGIN -->
+        <div class="card hidden" id="login-card">
+          <div class="card-header">
+            <span class="card-icon">🔐</span>
+            <h3>ADMIN ACCESS</h3>
           </div>
-          <div class="field-group">
-            <label class="field-label">PASSWORD</label>
-            <input type="password" id="loginPass" class="field-input" placeholder="••••••••" required/>
+          <div class="card-body">
+            <p style="color:var(--text-dim);font-size:0.92rem;text-align:center;line-height:1.7;">
+              Sign in with your admin Google account to access the Control Room.
+            </p>
+            <button class="btn-google" id="doLoginBtn">
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20" alt="Google" />
+              <span>SIGN IN WITH GOOGLE</span>
+            </button>
+            <div id="login-msg" class="msg-box hidden"></div>
           </div>
-          <button type="submit" class="btn-primary" id="loginBtn">
-            <span>AUTHENTICATE</span>
-            <div class="btn-shine"></div>
-          </button>
-        </form>
-        <div id="loginMsg" class="form-msg hidden"></div>
-      </div>
-    </div>
-
-    <!-- ─── DELETE CONFIRM MODAL ─── -->
-    <div id="deleteModal" class="modal-overlay hidden">
-      <div class="modal-box">
-        <div class="modal-bar" style="background:linear-gradient(90deg,var(--red),var(--red-dim))"></div>
-        <div class="modal-icon">⚠️</div>
-        <h3 class="modal-title" style="color:var(--red)">CONFIRM DELETE</h3>
-        <p class="modal-sub" id="deleteModalMsg">Delete this player permanently?</p>
-        <div class="modal-btns">
-          <button id="deleteCancelBtn" class="btn-ghost-sm">CANCEL</button>
-          <button id="deleteConfirmBtn" class="btn-danger">DELETE</button>
         </div>
-      </div>
-    </div>
 
-    <!-- ADMIN PANEL -->
-    <section id="section-admin" class="section hidden">
-      <div class="section-inner">
-        <div class="section-tag">// ADMIN PANEL</div>
-        <h2 class="section-title">MATCH <span>CONTROL</span></h2>
-
-        <div class="admin-grid">
-          <!-- Match Result Form -->
-          <div class="glass-card">
-            <div class="card-label">⚽ ADD MATCH RESULT</div>
-            <form id="matchForm">
-              <div class="match-vs-grid">
-                <div class="player-col">
-                  <label class="field-label">PLAYER A</label>
-                  <select id="matchPlayerA" class="field-input" required>
-                    <option value="">— Select —</option>
-                  </select>
-                  <input type="number" id="matchGoalsA" class="field-input" placeholder="Goals" min="0" required/>
+        <!-- ADMIN: MATCH CONTROL -->
+        <div class="card hidden" id="admin-panel">
+          <div class="card-header">
+            <span class="card-icon">⚙️</span>
+            <h3>MATCH CONTROL</h3>
+            <span class="admin-badge">ADMIN</span>
+          </div>
+          <div class="card-body">
+            <div class="match-form">
+              <div class="match-players">
+                <div class="player-select-box">
+                  <label class="select-label">PLAYER A</label>
+                  <select id="playerA" class="neon-select"><option value="">Select...</option></select>
                 </div>
-                <div class="vs-col">VS</div>
-                <div class="player-col">
-                  <label class="field-label">PLAYER B</label>
-                  <select id="matchPlayerB" class="field-input" required>
-                    <option value="">— Select —</option>
-                  </select>
-                  <input type="number" id="matchGoalsB" class="field-input" placeholder="Goals" min="0" required/>
+                <div class="vs-badge">VS</div>
+                <div class="player-select-box">
+                  <label class="select-label">PLAYER B</label>
+                  <select id="playerB" class="neon-select"><option value="">Select...</option></select>
                 </div>
               </div>
-              <button type="submit" class="btn-primary btn-red" id="matchBtn">
-                <span>SUBMIT RESULT</span>
-                <div class="btn-shine"></div>
+              <div class="goals-row">
+                <div class="goal-input-box">
+                  <label class="select-label">GOALS A</label>
+                  <input type="number" id="goalsA" class="neon-input goals-input" min="0" value="0" />
+                </div>
+                <div class="goal-divider">—</div>
+                <div class="goal-input-box">
+                  <label class="select-label">GOALS B</label>
+                  <input type="number" id="goalsB" class="neon-input goals-input" min="0" value="0" />
+                </div>
+              </div>
+              <button class="btn-primary btn-gold" id="submitMatchBtn">
+                <span>⚡ UPDATE MATCH RESULT</span>
+                <span class="btn-glow"></span>
               </button>
-            </form>
-            <div id="matchMsg" class="form-msg hidden"></div>
-          </div>
-
-          <!-- Player Management -->
-          <div class="glass-card">
-            <div class="card-label">🗂️ PLAYER MANAGEMENT</div>
-            <div id="adminPlayerList" class="admin-player-list">
-              <p class="no-data">No players yet.</p>
+              <div id="match-msg" class="msg-box hidden"></div>
             </div>
           </div>
         </div>
+
+        <!-- ADMIN: SCHEDULE FIXTURE -->
+        <div class="card hidden" id="fixture-admin-panel">
+          <div class="card-header">
+            <span class="card-icon">📅</span>
+            <h3>SCHEDULE MATCH</h3>
+            <span class="admin-badge">ADMIN</span>
+          </div>
+          <div class="card-body">
+            <div class="input-group">
+              <select id="fixturePlayerA" class="neon-select"><option value="">Player A...</option></select>
+            </div>
+            <div class="input-group">
+              <select id="fixturePlayerB" class="neon-select"><option value="">Player B...</option></select>
+            </div>
+            <div class="input-group">
+              <input type="datetime-local" id="fixtureDate" class="neon-input" />
+              <div class="input-bar"></div>
+            </div>
+            <div class="input-group">
+              <input type="text" id="fixtureVenue" class="neon-input" placeholder="Venue (optional)" maxlength="40" />
+              <div class="input-bar"></div>
+            </div>
+            <button class="btn-primary" id="addFixtureBtn">
+              <span>📅 SCHEDULE FIXTURE</span>
+              <span class="btn-glow"></span>
+            </button>
+            <div id="fixture-msg" class="msg-box hidden"></div>
+          </div>
+        </div>
+
+        <!-- ADMIN: TOURNAMENT SETUP -->
+        <div class="card hidden" id="bracket-admin-panel">
+          <div class="card-header">
+            <span class="card-icon">🎯</span>
+            <h3>TOURNAMENT SETUP</h3>
+            <span class="admin-badge">ADMIN</span>
+          </div>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" id="tournamentName" class="neon-input" placeholder="Tournament Name" maxlength="40" />
+              <div class="input-bar"></div>
+            </div>
+            <div class="input-group">
+              <select id="bracketType" class="neon-select">
+                <option value="elimination">Single Elimination</option>
+                <option value="roundrobin">Round Robin</option>
+              </select>
+            </div>
+            <p style="color:var(--text-dim);font-size:0.82rem;line-height:1.5;">
+              Uses all registered players. Bracket auto-generates from current player list.
+            </p>
+            <button class="btn-primary btn-gold" id="generateBracketBtn">
+              <span>🎯 GENERATE BRACKET</span>
+              <span class="btn-glow"></span>
+            </button>
+            <button class="btn-danger" id="clearBracketBtn" style="margin-top:8px;width:100%;padding:10px;border-radius:8px;font-family:var(--font-main);font-size:0.75rem;letter-spacing:0.1em;cursor:pointer;">
+              🗑️ CLEAR BRACKET
+            </button>
+            <div id="bracket-msg" class="msg-box hidden"></div>
+          </div>
+        </div>
+
       </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-      <div class="footer-logo">O BLOCK <span>E FOOTBALL</span></div>
-      <p>Where Kings Compete &nbsp;·&nbsp; Season 01</p>
-      <p class="footer-tech">Powered by Firebase · Built for Champions</p>
-    </footer>
+      <!-- RIGHT COLUMN -->
+      <div class="right-col">
 
-  </div><!-- /app -->
+        <!-- LEADERBOARD TAB -->
+        <div class="tab-content active" id="tab-leaderboard">
+          <div class="card leaderboard-card">
+            <div class="card-header">
+              <span class="card-icon">🏆</span>
+              <h3>LIVE LEADERBOARD</h3>
+              <button class="whatsapp-btn" id="shareLeaderboardBtn">📲 SHARE</button>
+              <div class="pulse-ring"></div>
+            </div>
+            <div class="leaderboard-table-wrapper">
+              <table class="leaderboard-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>PLAYER</th>
+                    <th>M</th>
+                    <th>G</th>
+                    <th>GD</th>
+                    <th>PTS</th>
+                    <th id="delete-col-header" class="hidden">DEL</th>
+                  </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                  <tr><td colspan="7" class="loading-row"><div class="loader"></div><span>LOADING...</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIXTURES TAB -->
+        <div class="tab-content hidden" id="tab-fixtures">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-icon">📅</span>
+              <h3>MATCH FIXTURES</h3>
+              <button class="whatsapp-btn" id="shareFixturesBtn">📲 SHARE</button>
+            </div>
+            <div class="card-body" id="fixtures-list">
+              <div class="empty-state">📅 No fixtures scheduled yet.<br>Admin can schedule matches from the left panel.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLAYERS TAB -->
+        <div class="tab-content hidden" id="tab-players">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-icon">👤</span>
+              <h3>PLAYER PROFILES</h3>
+            </div>
+            <div class="players-grid" id="players-grid">
+              <div class="empty-state">👤 No players registered yet.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRACKET TAB -->
+        <div class="tab-content hidden" id="tab-bracket">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-icon">🎯</span>
+              <h3 id="bracket-title">TOURNAMENT BRACKET</h3>
+              <button class="whatsapp-btn" id="shareBracketBtn">📲 SHARE</button>
+            </div>
+            <div class="bracket-container" id="bracket-container">
+              <div class="empty-state">🎯 No tournament generated yet.<br>Admin can create one from the left panel.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAYER PROFILE MODAL -->
+  <div class="modal-overlay hidden" id="profileModal">
+    <div class="modal profile-modal">
+      <button class="modal-close" id="closeProfileBtn">✕</button>
+      <div class="profile-header">
+        <div class="profile-avatar-lg" id="profileAvatar"></div>
+        <div class="profile-info">
+          <h2 class="profile-name" id="profileName"></h2>
+          <div class="profile-position" id="profilePosition"></div>
+          <button class="whatsapp-btn" id="shareProfileBtn">📲 SHARE PLAYER</button>
+        </div>
+      </div>
+      <div class="profile-stats-grid">
+        <div class="profile-stat"><span class="stat-val" id="profileMatches">0</span><span class="stat-lbl">MATCHES</span></div>
+        <div class="profile-stat"><span class="stat-val" id="profileGoals">0</span><span class="stat-lbl">GOALS</span></div>
+        <div class="profile-stat"><span class="stat-val" id="profileGD">0</span><span class="stat-lbl">GOAL DIFF</span></div>
+        <div class="profile-stat"><span class="stat-val" id="profilePoints">0</span><span class="stat-lbl">POINTS</span></div>
+        <div class="profile-stat"><span class="stat-val" id="profileWinRate">0%</span><span class="stat-lbl">WIN RATE</span></div>
+        <div class="profile-stat"><span class="stat-val" id="profileRank">-</span><span class="stat-lbl">RANK</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRM DELETE MODAL -->
+  <div class="modal-overlay hidden" id="confirmModal">
+    <div class="modal">
+      <div class="modal-icon">⚠️</div>
+      <h3 class="modal-title">CONFIRM DELETE</h3>
+      <p class="modal-text" id="modalText">Delete this player? This cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="btn-ghost" id="cancelDeleteBtn">CANCEL</button>
+        <button class="btn-danger" id="confirmDeleteBtn">DELETE</button>
+      </div>
+    </div>
+  </div>
 
   <!-- TOAST -->
-  <div id="toast" class="toast"></div>
+  <div class="toast hidden" id="toast"><span id="toast-msg"></span></div>
 
-  <!-- Firebase SDK (v9 compat mode — works without bundler) -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
-  <!-- App -->
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
